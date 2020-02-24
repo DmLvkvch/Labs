@@ -5,17 +5,10 @@ import dima.levkovich.compgraph.View.Renderer;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-public class JSliderYController implements ChangeListener {
-    private GLJPanel gljPanel;
-    private Renderer renderer;
-    private JSlider jSlider;
-
+public class JSliderYController extends AbstractSlider {
     public JSliderYController(JSlider jSlider, GLJPanel gljPanel, Renderer renderer){
-        this.gljPanel = gljPanel;
-        this.renderer = renderer;
-        this.jSlider = jSlider;
+        super(gljPanel, renderer, jSlider);
     }
 
     @Override

@@ -1,19 +1,14 @@
 package dima.levkovich.compgraph.Controller;
+
 import com.jogamp.opengl.awt.GLJPanel;
-import dima.levkovich.compgraph.Model.Alpha;
 import dima.levkovich.compgraph.Model.Blend;
 import dima.levkovich.compgraph.View.Renderer;
-
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
-public class JComboBoxSFactor implements ItemListener {
-    private GLJPanel gljPanel;
-    private Renderer renderer;
+public class JComboBoxSFactor extends AbstractComboBox {
 
     public JComboBoxSFactor(GLJPanel gljPanel, Renderer renderer){
-        this.gljPanel = gljPanel;
-        this.renderer = renderer;
+        super(gljPanel, renderer);
     }
 
     @Override

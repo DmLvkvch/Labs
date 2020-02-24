@@ -2,16 +2,11 @@ package dima.levkovich.compgraph.View;
 
 import com.jogamp.opengl.awt.GLJPanel;
 import dima.levkovich.compgraph.Controller.*;
-import dima.levkovich.compgraph.Model.Alpha;
-import dima.levkovich.compgraph.Model.Blend;
-import dima.levkovich.compgraph.Model.Primitives;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
 @Component
 public class RightPanel extends JPanel {
 
@@ -22,33 +17,35 @@ public class RightPanel extends JPanel {
     private JSlider sliderAlpha;
     private JComboBox<String> jComboBoxSfactor;
     private JComboBox<String> jComboBoxDfactor;
+    private ControllerFactory controllerFactory;
     @Autowired
-    @Lazy
-    public RightPanel(GLJPanel gljPanel, Renderer renderer){
-        comboBoxWithPrimitives = new JComboBox<>(Primitives.getPrimitives());
+    public RightPanel(GLJPanel gljPanel, Renderer renderer, ControllerFactory controllerFactory){
+        ComboBoxFactory comboBoxFactory =(ComboBoxFactory)controllerFactory.getInstance("ComboBox");
+        SliderFactory sliderFactory = (SliderFactory)controllerFactory.getInstance("Slider");
+        comboBoxWithPrimitives = comboBoxFactory.getInstanceOfCombo("Primitives");
         this.setPreferredSize(new Dimension(230,700));
         setBackground(Color.blue);
-        comboBoxWithPrimitives.addItemListener(new JComboBoxWithPrimitivesController(gljPanel, renderer));
+        //comboBoxWithPrimitives.addItemListener(new JComboBoxWithPrimitivesController(gljPanel, renderer));
         add(comboBoxWithPrimitives);
-        sliderX = new JSlider(0, 600, 0);
-        sliderX.addChangeListener(new JSliderXController(sliderX, gljPanel, renderer));
+        sliderX = sliderFactory.getInstanceOfSlider("X");
+       // sliderX.addChangeListener(new JSliderXController(sliderX, gljPanel, renderer));
         add(sliderX);
-        sliderY = new JSlider(0, 600, 0);
-        sliderY.addChangeListener(new JSliderYController(sliderY, gljPanel, renderer));
+        sliderY = sliderFactory.getInstanceOfSlider("Y");
+       // sliderY.addChangeListener(new JSliderYController(sliderY, gljPanel, renderer));
         add(sliderY);
-        jComboBoxAlpha = new JComboBox<>(Alpha.getAlpha());
-        jComboBoxAlpha.addItemListener(new JComboBoxWithAlphaController(gljPanel, renderer));
+        jComboBoxAlpha = comboBoxFactory.getInstanceOfCombo("Alpha");
+     //   jComboBoxAlpha.addItemListener(new JComboBoxWithAlphaController(gljPanel, renderer));
         add(jComboBoxAlpha);
-        sliderAlpha = new JSlider(0, 100, 0);
-        sliderAlpha.addChangeListener(new JSliderAlpha(sliderAlpha, gljPanel, renderer));
+        sliderAlpha = sliderFactory.getInstanceOfSlider("Alpha");
+       // sliderAlpha.addChangeListener(new JSliderAlpha(sliderAlpha, gljPanel, renderer));
         add(sliderAlpha);
 
-        jComboBoxSfactor = new JComboBox<>(Blend.getSfactor());
-        jComboBoxSfactor.addItemListener(new JComboBoxSFactor(gljPanel, renderer));
+        jComboBoxSfactor = comboBoxFactory.getInstanceOfCombo("SFactor");
+       // jComboBoxSfactor.addItemListener(new JComboBoxSFactor(gljPanel, renderer));
         add(jComboBoxSfactor);
 
-        jComboBoxDfactor = new JComboBox<>(Blend.getDfactor());
-        jComboBoxDfactor.addItemListener(new JComboBoxDFactor(gljPanel, renderer));
+        jComboBoxDfactor = comboBoxFactory.getInstanceOfCombo("DFactor");
+     //   jComboBoxDfactor.addItemListener(new JComboBoxDFactor(gljPanel, renderer));
         add(jComboBoxDfactor);
     }
 
